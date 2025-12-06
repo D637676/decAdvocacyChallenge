@@ -363,7 +363,7 @@ if 'scenario_data_sorted' not in locals():
     scenario_data_sorted = scenario_data.sort_values(by='Total Cars Fixed', ascending=False)
 
 
-plt.figure(figsize=(12, 7))
+plt.figure(figsize=(7, 5))
 sns.barplot(
     data=scenario_data_sorted,
     x='Total Cars Fixed',
