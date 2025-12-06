@@ -85,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
 Table&nbsp;1: Overview of the productivity data
 </figcaption>
 <div aria-describedby="tbl-data-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display" data-execution_count="96">
+<div class="cell-output cell-output-display" data-execution_count="186">
 <div>
 
 
@@ -186,7 +186,7 @@ Table&nbsp;1: Overview of the productivity data
 Table&nbsp;2: Summary statistics by shop and boss presence
 </figcaption>
 <div aria-describedby="tbl-data-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display" data-execution_count="97">
+<div class="cell-output cell-output-display" data-execution_count="187">
 <div>
 
 
@@ -309,7 +309,7 @@ Table&nbsp;2: Summary statistics by shop and boss presence
 </section>
 <section id="productivity-by-shop-and-boss-presence" class="level2">
 <h2 class="anchored" data-anchor-id="productivity-by-shop-and-boss-presence">Productivity by shop and boss presence</h2>
-<div id="1e16d7ab" class="cell" data-execution_count="4">
+<div id="e9f1eb1d" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -318,7 +318,7 @@ Table&nbsp;2: Summary statistics by shop and boss presence
 </div>
 </div>
 </div>
-<p>**Analysis of Cars Fixed per Day by Boss Presence</p>
+<p><strong>Analysis of Cars Fixed per Day by Boss Presence</strong></p>
 <p>What this plot shows:</p>
 <ul>
 <li><strong>General Trend:</strong> You can observe two distinct clusters of data points for each ‘Boss Presence’ category. The cluster for ‘Present’ (green dots) is generally higher on the ‘Number of Cars Fixed’ axis than the cluster for ‘Absent’ (red dots).</li>
@@ -326,23 +326,23 @@ Table&nbsp;2: Summary statistics by shop and boss presence
 <li><strong>Spread of Data:</strong> The spread of the dots within each category indicates the variability in cars fixed. Even when Patrick is present, there’s a range of productivity, and similarly when he’s absent. However, the overall shift upwards when he’s there is quite apparent.</li>
 </ul>
 <p>This plot effectively illustrates the moderate positive correlation, providing a clear visual representation of how Patrick’s presence impacts the daily number of cars fixed.</p>
-<div id="149a0ab5" class="cell" data-execution_count="5">
+<div id="ecbb9837" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-6-output-1.png" width="1143" height="663" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-6-output-1.png" width="615" height="375" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="68c0191c" class="cell" data-execution_count="6">
+<div id="04636988" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>The correlation between 'boss presence' and 'carsFixed' is: 0.2738
 There is a moderate positive correlation, suggesting that boss presence is associated with a noticeable increase in cars fixed.</code></pre>
 </div>
 </div>
 <p><strong>Productivity per shop and boss presence</strong></p>
-<div id="87931920" class="cell" data-execution_count="7">
+<div id="8c2d079f" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>Mean Productivity per Shop:</code></pre>
 </div>
@@ -395,7 +395,7 @@ There is a moderate positive correlation, suggesting that boss presence is assoc
 </div>
 </div>
 </div>
-<div id="cd5f8633" class="cell" data-execution_count="8">
+<div id="441197c3" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -404,18 +404,16 @@ There is a moderate positive correlation, suggesting that boss presence is assoc
 </div>
 </div>
 </div>
-<p>Overall Best Performing Shop:</p>
-<p>Shop 5: Consistently fixes the highest number of cars, both when Patrick is absent (45.51 cars) and when he is present (53.73 cars). While Patrick’s presence still adds to its productivity, Shop 5 has the highest baseline and overall output.</p>
-<p>Overall Worst Performing Shop:</p>
-<p>Shop 1: Consistently fixes the lowest number of cars, both when Patrick is absent (11.05 cars) and when he is present (18.00 cars). It has the lowest baseline productivity among all shops.</p>
-<p>Shops that benefit MOST from Patrick’s Presence (where his presence makes the biggest positive difference):</p>
-<p>Shop 4: This shop shows the largest percentage increase and absolute increase (12.78 additional cars) when Patrick is present. His visits have the most significant impact on boosting its productivity. Shop 2: Also benefits greatly from Patrick’s presence (10.07 additional cars).</p>
-<p>Shop that benefits LEAST from Patrick’s Presence (where his presence makes the smallest positive difference):</p>
-<p>Shop 3: While productivity still increases with Patrick’s presence, the impact is the smallest (2.94 additional cars) compared to other shops. This means his time there yields the least additional output relative to the other locations.</p>
-<p>In summary, Shop 5 is your top performer in absolute terms, while Shop 1 is the lowest. However, if Patrick wants to maximize the impact of his presence, he should prioritize Shop 4 and Shop 2, as his visits there lead to the most substantial increases in cars fixed.</p>
-</section>
-<section id="recommendations-which-shops-should-he-prioritize-why" class="level2">
-<h2 class="anchored" data-anchor-id="recommendations-which-shops-should-he-prioritize-why">Recommendations: Which shops should he prioritize? Why?</h2>
+<p><strong>Overall Best Performing Shop:</strong></p>
+<p><strong>Shop 5:</strong> Consistently fixes the highest number of cars, both when Patrick is absent (45.51 cars) and when he is present (53.73 cars). While Patrick’s presence still adds to its productivity, Shop 5 has the highest baseline and overall output.</p>
+<p><strong>Overall Worst Performing Shop:</strong></p>
+<p><strong>Shop 1:</strong> Consistently fixes the lowest number of cars, both when Patrick is absent (11.05 cars) and when he is present (18.00 cars). It has the lowest baseline productivity among all shops.</p>
+<p><strong>Shops that benefit MOST from Patrick’s Presence (where his presence makes the biggest positive difference):</strong></p>
+<p><strong>Shop 4:</strong> This shop shows the largest percentage increase and absolute increase (12.78 additional cars) when Patrick is present. His visits have the most significant impact on boosting its productivity. <strong>Shop 2:</strong> Also benefits greatly from Patrick’s presence (10.07 additional cars).</p>
+<p><strong>Shop that benefits LEAST from Patrick’s Presence (where his presence makes the smallest positive difference):</strong></p>
+<p><strong>Shop 3:</strong> While productivity still increases with Patrick’s presence, the impact is the smallest (2.94 additional cars) compared to other shops. This means his time there yields the least additional output relative to the other locations.</p>
+<p><strong>In summary, Shop 5 is your top performer in absolute terms, while Shop 1 is the lowest. However, if Patrick wants to maximize the impact of his presence, he should prioritize Shop 4 and Shop 2, as his visits there lead to the most substantial increases in cars fixed.</strong></p>
+<p><strong>Recommendations: Which shops should he prioritize? Why?</strong></p>
 <p>Based on our detailed analysis, here are the clear, specific recommendations for Patrick’s shop prioritization:</p>
 <p><strong>Which shops should he prioritize?</strong></p>
 <p>Patrick should prioritize visiting <strong>Shop 4</strong>, followed by <strong>Shop 2</strong>, and then <strong>Shop 5</strong>.</p>
@@ -461,18 +459,11 @@ There is a moderate positive correlation, suggesting that boss presence is assoc
 <li><strong>External Factors:</strong> Unforeseen events like major car recalls, economic downturns, or even severe weather could impact overall productivity and revenue, regardless of your schedule.</li>
 </ul>
 <p><strong>In summary:</strong> The revenue figures are strong, data-driven <em>estimates</em> that highlight the <em>potential</em> financial gains from optimized scheduling. They provide a very solid basis for making strategic decisions. However, they should be viewed with a realistic understanding that real-world outcomes can vary due to factors not fully captured in the historical data or our assumptions. Continuous monitoring and adjustment would be wise.</p>
-<div id="4cebba57" class="cell" data-execution_count="9">
-<div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/_r/96x83kq95nn7pv37b8hbx1b40000gn/T/ipykernel_33922/4133578473.py:16: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.barplot(</code></pre>
-</div>
+<div id="ea147fab" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-10-output-2.png" width="951" height="567" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-10-output-1.png" width="763" height="471" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -489,18 +480,11 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <li><strong>Shop 5:</strong> Also contributes a substantial <strong>$4,110</strong> in additional weekly revenue.</li>
 </ul>
 <p>This visualization powerfully demonstrates the financial incentive for Patrick to allocate his time to these specific high-impact shops, as it directly translates into thousands of dollars in additional revenue per week for the business.</p>
-<div id="dbc5c765" class="cell" data-execution_count="10">
-<div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/_r/96x83kq95nn7pv37b8hbx1b40000gn/T/ipykernel_33922/3061641293.py:32: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.barplot(</code></pre>
-</div>
+<div id="b388ebe4" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-11-output-2.png" width="1141" height="663" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-11-output-1.png" width="1141" height="663" class="figure-img"></p>
 </figure>
 </div>
 </div>

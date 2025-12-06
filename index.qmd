@@ -6,6 +6,7 @@ format:
 execute:
   echo: false
   eval: true
+  warning: false
 ---
 
 # 🔧 Decision Advocacy Challenge - Patrick's Auto Shop Analysis
@@ -44,6 +45,8 @@ summary
 ```
 ## Productivity by shop and boss presence
 ```{python}
+import warnings
+warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.lines import Line2D
@@ -77,7 +80,7 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
 ```
-**Analysis of Cars Fixed per Day by Boss Presence
+**Analysis of Cars Fixed per Day by Boss Presence**
 
 What this plot shows:
 
@@ -90,6 +93,8 @@ This plot effectively illustrates the moderate positive correlation, providing a
 ```{python}
 #| echo: false
 #| include: true
+import warnings
+warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -105,7 +110,7 @@ summary_reset = summary.reset_index()
 # Rename 'boss' column values for better legend labels
 summary_reset['boss_presence'] = summary_reset['boss'].map({0: 'Absent', 1: 'Present'})
 
-plt.figure(figsize=(12, 7))
+plt.figure(figsize=(5, 4))
 sns.barplot(
     data=summary_reset,
     x='shopID',
@@ -169,6 +174,8 @@ print("Mean Productivity per Shop:")
 display(mean_productivity)
 ```
 ```{python}
+import warnings
+warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -191,27 +198,27 @@ plt.tight_layout()
 plt.show()
 
 ```
-Overall Best Performing Shop:
+**Overall Best Performing Shop:**
 
-Shop 5: Consistently fixes the highest number of cars, both when Patrick is absent (45.51 cars) and when he is present (53.73 cars). While Patrick's presence still adds to its productivity, Shop 5 has the highest baseline and overall output.
+**Shop 5:** Consistently fixes the highest number of cars, both when Patrick is absent (45.51 cars) and when he is present (53.73 cars). While Patrick's presence still adds to its productivity, Shop 5 has the highest baseline and overall output.
 
-Overall Worst Performing Shop:
+**Overall Worst Performing Shop:**
 
-Shop 1: Consistently fixes the lowest number of cars, both when Patrick is absent (11.05 cars) and when he is present (18.00 cars). It has the lowest baseline productivity among all shops.
+**Shop 1:** Consistently fixes the lowest number of cars, both when Patrick is absent (11.05 cars) and when he is present (18.00 cars). It has the lowest baseline productivity among all shops.
 
-Shops that benefit MOST from Patrick's Presence (where his presence makes the biggest positive difference):
+**Shops that benefit MOST from Patrick's Presence (where his presence makes the biggest positive difference):**
 
-Shop 4: This shop shows the largest percentage increase and absolute increase (12.78 additional cars) when Patrick is present. His visits have the most significant impact on boosting its productivity.
-Shop 2: Also benefits greatly from Patrick's presence (10.07 additional cars).
+**Shop 4:**  This shop shows the largest percentage increase and absolute increase (12.78 additional cars) when Patrick is present. His visits have the most significant impact on boosting its productivity.
+**Shop 2:** Also benefits greatly from Patrick's presence (10.07 additional cars).
 
-Shop that benefits LEAST from Patrick's Presence (where his presence makes the smallest positive difference):
+**Shop that benefits LEAST from Patrick's Presence (where his presence makes the smallest positive difference):**
 
-Shop 3: While productivity still increases with Patrick's presence, the impact is the smallest (2.94 additional cars) compared to other shops. This means his time there yields the least additional output relative to the other locations.
+**Shop 3:** While productivity still increases with Patrick's presence, the impact is the smallest (2.94 additional cars) compared to other shops. This means his time there yields the least additional output relative to the other locations.
 
-In summary, Shop 5 is your top performer in absolute terms, while Shop 1 is the lowest. However, if Patrick wants to maximize the impact of his presence, he should prioritize Shop 4 and Shop 2, as his visits there lead to the most substantial increases in cars fixed.
+**In summary, Shop 5 is your top performer in absolute terms, while Shop 1 is the lowest. However, if Patrick wants to maximize the impact of his presence, he should prioritize Shop 4 and Shop 2, as his visits there lead to the most substantial increases in cars fixed.**
 
 
-## Recommendations: Which shops should he prioritize? Why?
+**Recommendations: Which shops should he prioritize? Why?**
 
 Based on our detailed analysis, here are the clear, specific recommendations for Patrick's shop prioritization:
 
@@ -272,6 +279,8 @@ Let's talk about how confident we can be in these revenue figures. Remember, the
 ```{python}
 #| echo: false
 #| include: true
+import warnings
+warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -286,7 +295,7 @@ revenue_impact_df = pd.DataFrame(revenue_impact_data)
 # Sort for better visualization
 revenue_impact_df_sorted = revenue_impact_df.sort_values(by='Additional Weekly Revenue', ascending=False)
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(7, 5))
 sns.barplot(
     data=revenue_impact_df_sorted,
     x='Shop',
@@ -322,6 +331,8 @@ This visualization powerfully demonstrates the financial incentive for Patrick t
 ```{python}
 #| echo: false
 #| include: true
+import warnings
+warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
