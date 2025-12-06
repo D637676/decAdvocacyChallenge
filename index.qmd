@@ -51,7 +51,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.lines import Line2D
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(7, 5))
 sns.stripplot(
     data=carsDF,
     x='shopID',
@@ -63,9 +63,9 @@ sns.stripplot(
     size=7
 )
 
-plt.title("Cars Fixed per Day by Shop ID and Boss Presence", fontsize=16)
-plt.xlabel("Shop ID", fontsize=12)
-plt.ylabel("Number of Cars Fixed", fontsize=12)
+plt.title("Cars Fixed per Day by Shop ID and Boss Presence", fontsize=14)
+plt.xlabel("Shop ID", fontsize=11)
+plt.ylabel("Number of Cars Fixed", fontsize=11)
 plt.xticks(fontsize=10)
 plt.yticks(fontsize=10)
 
@@ -74,7 +74,7 @@ legend_elements = [
     Line2D([0], [0], marker='o', color='w', label='Absent', markerfacecolor='red', markersize=10),
     Line2D([0], [0], marker='o', color='w', label='Present', markerfacecolor='green', markersize=10)
 ]
-plt.legend(handles=legend_elements, title="Boss Presence")
+plt.legend(handles=legend_elements, title="Boss Presence", fontsize=9)
 
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
