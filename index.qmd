@@ -4,7 +4,7 @@ subtitle: "Data-Driven Scheduling for Maximum Productivity"
 format:
   html: default
 execute:
-  echo: true
+  echo: false
   eval: true
 ---
 
@@ -31,40 +31,355 @@ carsDF = pd.read_csv("carsFixed.csv")
 ```{python}
 #| label: tbl-data-overview
 #| tbl-cap: "Overview of the productivity data"
-#| echo: true
+#| echo: false
 carsDF.head(10)
 ```
 
 ```{python}
 #| label: tbl-data-summary
 #| tbl-cap: "Summary statistics by shop and boss presence"
-#| echo: true
+#| echo: false
 summary = carsDF.groupby(['shopID', 'boss'])['carsFixed'].agg(['count', 'mean', 'std', 'min', 'max']).round(2)
 summary
 ```
-#Productivity by shop and boss presence
+## Productivity by shop and boss presence
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+from matplotlib.lines import Line2D
 
-Your report should answer these questions in a clear, concise way:
+plt.figure(figsize=(10, 6))
+sns.stripplot(
+    data=carsDF,
+    x='shopID',
+    y='carsFixed',
+    hue='boss',
+    jitter=0.2,
+    alpha=0.7,
+    palette={0: 'red', 1: 'green'},
+    size=7
+)
 
-1. **What does the data show?**
+plt.title("Cars Fixed per Day by Shop ID and Boss Presence", fontsize=16)
+plt.xlabel("Shop ID", fontsize=12)
+plt.ylabel("Number of Cars Fixed", fontsize=12)
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10)
 
-   - Visualize all 250 data points showing productivity by shop and boss presence
-   - Which shops benefit most from Patrick's presence? Which don't?
+# Create custom legend handles with desired colors
+legend_elements = [
+    Line2D([0], [0], marker='o', color='w', label='Absent', markerfacecolor='red', markersize=10),
+    Line2D([0], [0], marker='o', color='w', label='Present', markerfacecolor='green', markersize=10)
+]
+plt.legend(handles=legend_elements, title="Boss Presence")
 
-2. **What should Patrick do?**
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+```
+**Analysis of Cars Fixed per Day by Boss Presence
 
-   - Clear, specific recommendations: Which shops should he prioritize? Why?
-   - What's the potential financial impact? (Revenue or profit implications)
+What this plot shows:
 
-3. **How confident can Patrick be?**
+*   **General Trend:** You can observe two distinct clusters of data points for each 'Boss Presence' category. The cluster for 'Present' (green dots) is generally higher on the 'Number of Cars Fixed' axis than the cluster for 'Absent' (red dots).
+*   **Increased Productivity:** This visually confirms that, on average, more cars tend to be fixed when Patrick is present compared to when he is absent.
+*   **Spread of Data:** The spread of the dots within each category indicates the variability in cars fixed. Even when Patrick is present, there's a range of productivity, and similarly when he's absent. However, the overall shift upwards when he's there is quite apparent.
 
-   - Explain uncertainty in plain terms an auto-mechanic can understand
-   - What ranges of differences can he expect? (We only have 250 days—that's not a huge sample)
-   - What could go wrong? What assumptions are you making?
+This plot effectively illustrates the moderate positive correlation, providing a clear visual representation of how Patrick's presence impacts the daily number of cars fixed.
 
-4. **What does the future look like?**
+```{python}
+#| echo: false
+#| include: true
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
 
-   - Show at least one visualization of projected outcomes under different scheduling scenarios
-   - Help Patrick see the potential impact of following your recommendations
+# Ensure 'summary' DataFrame is available
+# If not, re-create it (assuming carsDF is available)
+if 'summary' not in locals():
+    summary = carsDF.groupby(['shopID', 'boss'])['carsFixed'].agg(['count', 'mean', 'std', 'min', 'max']).round(2)
+
+# Reset index to make 'shopID' and 'boss' columns for plotting
+summary_reset = summary.reset_index()
+
+# Rename 'boss' column values for better legend labels
+summary_reset['boss_presence'] = summary_reset['boss'].map({0: 'Absent', 1: 'Present'})
+
+plt.figure(figsize=(12, 7))
+sns.barplot(
+    data=summary_reset,
+    x='shopID',
+    y='mean',
+    hue='boss_presence', # Use boss_presence to group bars
+    palette={'Absent': 'red', 'Present': 'green'},
+    width=0.3 # Reduce the width of the bars to half
+)
+
+plt.title('Mean Cars Fixed per Day by Shop ID and Boss Presence', fontsize=16)
+plt.xlabel('Shop ID', fontsize=12)
+plt.ylabel('Mean Number of Cars Fixed', fontsize=12)
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10)
+plt.legend(title='Boss Presence')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+```
+```{python}
+#| echo: false
+#| include: true
+import pandas as pd
+
+# Calculate the correlation between 'boss' and 'carsFixed'
+correlation = carsDF['boss'].corr(carsDF['carsFixed'])
+
+print(f"The correlation between 'boss presence' and 'carsFixed' is: {correlation:.4f}")
+
+# Interpretation based on the correlation value
+if correlation > 0.5:
+    interpretation = "There is a strong positive correlation, meaning when the boss is present, the number of cars fixed tends to be significantly higher."
+elif correlation > 0.1:
+    interpretation = "There is a moderate positive correlation, suggesting that boss presence is associated with a noticeable increase in cars fixed."
+elif correlation >= 0:
+    interpretation = "There is a weak or very weak positive correlation, indicating a slight tendency for more cars to be fixed when the boss is present, but the relationship is not very strong."
+elif correlation < -0.5:
+    interpretation = "There is a strong negative correlation, meaning when the boss is present, the number of cars fixed tends to be significantly lower."
+elif correlation < -0.1:
+    interpretation = "There is a moderate negative correlation, suggesting that boss presence is associated with a noticeable decrease in cars fixed."
+else:
+    interpretation = "There is a weak or very weak negative correlation, indicating a slight tendency for fewer cars to be fixed when the boss is present, but the relationship is not very strong."
+
+print(interpretation)
+```
+**Productivity per shop and boss presence**
+```{python}
+#| echo: false
+#| include: true
+import pandas as pd
+
+# Ensure 'mean_productivity' DataFrame is available
+# If not, re-create it (assuming carsDF is available)
+if 'mean_productivity' not in locals():
+    if 'summary' not in locals():
+        summary = carsDF.groupby(['shopID', 'boss'])['carsFixed'].agg(['count', 'mean', 'std', 'min', 'max']).round(2)
+    mean_productivity = summary['mean'].unstack(level='boss')
+
+print("Mean Productivity per Shop:")
+display(mean_productivity)
+```
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# Ensure 'mean_productivity' DataFrame is available
+# If not, re-create it (assuming carsDF is available)
+if 'mean_productivity' not in locals():
+    if 'summary' not in locals():
+        summary = carsDF.groupby(['shopID', 'boss'])['carsFixed'].agg(['count', 'mean', 'std', 'min', 'max']).round(2)
+    mean_productivity = summary['mean'].unstack(level='boss')
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(mean_productivity, annot=True, cmap='YlGnBu', fmt=".2f", linewidths=.5, cbar_kws={'label': 'Mean Cars Fixed'})
+plt.title('Mean Productivity per Shop: Boss Absent vs. Present', fontsize=16)
+plt.xlabel('Boss Presence (0=Absent, 1=Present)', fontsize=12)
+plt.ylabel('Shop ID', fontsize=12)
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10, rotation=0)
+plt.tight_layout()
+plt.show()
+
+```
+Overall Best Performing Shop:
+
+Shop 5: Consistently fixes the highest number of cars, both when Patrick is absent (45.51 cars) and when he is present (53.73 cars). While Patrick's presence still adds to its productivity, Shop 5 has the highest baseline and overall output.
+
+Overall Worst Performing Shop:
+
+Shop 1: Consistently fixes the lowest number of cars, both when Patrick is absent (11.05 cars) and when he is present (18.00 cars). It has the lowest baseline productivity among all shops.
+
+Shops that benefit MOST from Patrick's Presence (where his presence makes the biggest positive difference):
+
+Shop 4: This shop shows the largest percentage increase and absolute increase (12.78 additional cars) when Patrick is present. His visits have the most significant impact on boosting its productivity.
+Shop 2: Also benefits greatly from Patrick's presence (10.07 additional cars).
+
+Shop that benefits LEAST from Patrick's Presence (where his presence makes the smallest positive difference):
+
+Shop 3: While productivity still increases with Patrick's presence, the impact is the smallest (2.94 additional cars) compared to other shops. This means his time there yields the least additional output relative to the other locations.
+
+In summary, Shop 5 is your top performer in absolute terms, while Shop 1 is the lowest. However, if Patrick wants to maximize the impact of his presence, he should prioritize Shop 4 and Shop 2, as his visits there lead to the most substantial increases in cars fixed.
 
 
+## Recommendations: Which shops should he prioritize? Why?
+
+Based on our detailed analysis, here are the clear, specific recommendations for Patrick's shop prioritization:
+
+**Which shops should he prioritize?**
+
+Patrick should prioritize visiting **Shop 4**, followed by **Shop 2**, and then **Shop 5**.
+
+**Why?**
+
+*   **Shop 4 (Highest Impact):** Patrick's presence at Shop 4 yields the most significant increase in productivity, adding an average of **12.78** more cars fixed per day. This is where his time makes the biggest difference to the total number of cars fixed across the network.
+
+*   **Shop 2 (Second Highest Impact):** His presence in Shop 2 also leads to a substantial boost, with an average increase of **10.07** additional cars fixed per day.
+
+*   **Shop 5 (Strong Performer):** Even though Shop 5 is already the highest performing shop overall (with or without him), his presence still adds a considerable **8.22** additional cars, making it a valuable place to visit.
+
+**Conversely, which shops should he reconsider prioritizing?**
+
+Patrick should reconsider frequent visits to **Shop 3** if maximizing network productivity is the primary goal. While his presence there is still positive, it results in the smallest average increase of only **2.94** additional cars fixed per day. This means his time spent at Shop 3 yields the least additional output compared to the other locations. Spending more time at Shops 4, 2, and 5 would offer a much greater return on his valuable time.
+
+## Potential Financial Impact: Total Weekly Revenue from Top Shops
+
+Let's calculate the total potential weekly revenue impact for the top shops. Based on our analysis, the shops where Patrick's presence has the most significant impact are Shop 4, Shop 2, and Shop 5.
+
+Assuming an average revenue of **$500 per car fixed**, and considering that Patrick can visit one shop per day, if he dedicates one day each to these three top-impact shops within a week, the calculations are as follows:
+
+*   **Shop 4 Impact:** 12.78 additional cars/day * $500/car = **$6,390 additional revenue for that day**
+*   **Shop 2 Impact:** 10.07 additional cars/day * $500/car = **$5,035 additional revenue for that day**
+*   **Shop 5 Impact:** 8.22 additional cars/day * $500/car = **$4,110 additional revenue for that day**
+
+**Total Weekly Revenue Impact (from visiting these three high-impact shops once each in a week):**
+
+$6,390 (Shop 4) + $5,035 (Shop 2) + $4,110 (Shop 5) = **$15,535**
+
+Therefore, by strategically allocating just three days of his week to these three high-impact shops, Patrick could potentially generate an **additional $15,535 in revenue per week** for the network. This clearly demonstrates the significant financial incentive behind optimized scheduling.
+
+## Confidence Assessment for Revenue Figures
+
+Let's talk about how confident we can be in these revenue figures. Remember, these are projections based on historical data, and it's important to understand the factors that influence their accuracy:
+
+**1. Data Limitations – Not a Crystal Ball:**
+
+*   **Limited Historical Data:** Our calculations are based on 250 days of data. While helpful, this isn't a massive dataset. When we break it down by individual shops and whether you were present or not, the number of observations for each specific scenario becomes even smaller (e.g., only 5 or 10 days of your presence at some shops).
+*   **Averages as Best Guesses:** The 'additional cars fixed' numbers (like 12.78 for Shop 4) are averages. They are our best estimates based on the available data, but individual days will naturally vary. On any given day, the actual increase could be a bit higher or lower than the average.
+
+**2. Key Assumptions We're Making:**
+
+*   **Past Predicts Future:** We're assuming that the patterns observed in the past 250 days will continue. If there are significant changes in staffing, equipment, local market conditions, or even your management style, the results might differ.
+*   **Direct Causation:** We're attributing the increase directly to your presence. While the correlation is clear, the data doesn't tell us *why* your presence helps. It could be due to your direct supervision, problem-solving, improved morale, or other factors that happen concurrently with your visits.
+*   **Fixed Revenue per Car:** We've used an assumed $500 revenue per car. If your actual revenue per car varies, or if the mix of services changes, the financial impact will shift accordingly.
+
+**3. Potential Variability and Uncertainty:**
+
+*   **Day-to-Day Fluctuations:** Just because Shop 4 averages a 12.78-car increase doesn't mean it will be exactly that every time you visit. Some days it might be 10, other days 15. The revenue figure is an average projection.
+*   **External Factors:** Unforeseen events like major car recalls, economic downturns, or even severe weather could impact overall productivity and revenue, regardless of your schedule.
+
+**In summary:** The revenue figures are strong, data-driven *estimates* that highlight the *potential* financial gains from optimized scheduling. They provide a very solid basis for making strategic decisions. However, they should be viewed with a realistic understanding that real-world outcomes can vary due to factors not fully captured in the historical data or our assumptions. Continuous monitoring and adjustment would be wise.
+
+```{python}
+#| echo: false
+#| include: true
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# Data for the top shops' weekly revenue impact
+revenue_impact_data = {
+    'Shop': ['Shop 4', 'Shop 2', 'Shop 5'],
+    'Additional Weekly Revenue': [6390, 5035, 4110]
+}
+revenue_impact_df = pd.DataFrame(revenue_impact_data)
+
+# Sort for better visualization
+revenue_impact_df_sorted = revenue_impact_df.sort_values(by='Additional Weekly Revenue', ascending=False)
+
+plt.figure(figsize=(10, 6))
+sns.barplot(
+    data=revenue_impact_df_sorted,
+    x='Shop',
+    y='Additional Weekly Revenue',
+    palette='magma',
+    width=0.5 # Reduced bar width to half
+)
+
+plt.title('Potential Additional Weekly Revenue from Top Shops (Patrick Present)', fontsize=16)
+plt.xlabel('Shop', fontsize=12)
+plt.ylabel('Additional Weekly Revenue ($)', fontsize=12)
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+```
+
+## Potential Additional Weekly Revenue from Top Shops
+
+Let's visualize the potential weekly revenue impact for the top shops (Shop 4, Shop 2, and Shop 5). This bar plot will show the estimated additional revenue generated by Patrick's presence at each of these high-impact locations.
+
+The bar plot showing the 'Potential Additional Weekly Revenue from Top Shops' has been successfully generated! You might have seen a FutureWarning from Seaborn, but the plot is correct.
+
+This chart clearly illustrates the significant financial gains that can be achieved by strategically prioritizing Patrick's visits:
+
+*   **Shop 4:** Stands out with the highest potential additional weekly revenue of **$6,390** from a single day's visit, reinforcing its status as the most impactful shop.
+*   **Shop 2:** Follows with a strong potential of **$5,035** in additional weekly revenue.
+*   **Shop 5:** Also contributes a substantial **$4,110** in additional weekly revenue.
+
+This visualization powerfully demonstrates the financial incentive for Patrick to allocate his time to these specific high-impact shops, as it directly translates into thousands of dollars in additional revenue per week for the business.
+
+```{python}
+#| echo: false
+#| include: true
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# Ensure scenario_data is sorted for clear visualization
+# If 'scenario_data_sorted' is not in locals(), it means the previous cell was not run or the kernel was reset.
+# We will recalculate it to ensure the plot can be generated.
+if 'scenario_data_sorted' not in locals():
+    if 'mean_productivity' not in locals():
+        # Re-calculate mean_productivity if needed
+        summary = carsDF.groupby(['shopID', 'boss'])['carsFixed'].agg(['count', 'mean', 'std', 'min', 'max']).round(2)
+        mean_productivity = summary['mean'].unstack(level='boss')
+    
+    shops = [1, 2, 3, 4, 5]
+    scenario_absent_total = mean_productivity[0].sum()
+
+    scenario_shop_visits = {}
+    for shop_id in shops:
+        other_shops_absent = mean_productivity[0].drop(shop_id).sum()
+        current_shop_present = mean_productivity.loc[shop_id, 1]
+        scenario_shop_visits[f'Patrick visits Shop {shop_id}'] = other_shops_absent + current_shop_present
+
+    scenario_data = pd.DataFrame({
+        'Scenario': ['Patrick Absent Everywhere'] + list(scenario_shop_visits.keys()),
+        'Total Cars Fixed': [scenario_absent_total] + list(scenario_shop_visits.values())
+    })
+
+    scenario_data_sorted = scenario_data.sort_values(by='Total Cars Fixed', ascending=False)
+
+
+plt.figure(figsize=(12, 7))
+sns.barplot(
+    data=scenario_data_sorted,
+    x='Total Cars Fixed',
+    y='Scenario',
+    palette='viridis'
+)
+
+plt.title('Projected Total Cars Fixed per Day Under Different Scheduling Scenarios', fontsize=16)
+plt.xlabel('Total Number of Cars Fixed', fontsize=12)
+plt.ylabel('Scheduling Scenario', fontsize=12)
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10)
+plt.grid(axis='x', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+```
+## Projected Outcomes Under Different Scheduling Scenarios
+
+This chart clearly shows the 'Total Cars Fixed' for each potential scheduling scenario, making it easy to compare the impact of various choices.
+
+The bar plot visualizing 'Projected Total Cars Fixed per Day Under Different Scheduling Scenarios' has been successfully generated! You might have noticed a FutureWarning from Seaborn, but the plot is correct and clearly illustrates the outcomes.
+
+This chart effectively summarizes the potential impact of different scheduling choices for Patrick:
+
+*   **Highest Productivity:** The scenario 'Patrick visits Shop 4' consistently yields the highest total number of cars fixed across the network, demonstrating the maximum potential productivity.
+*   **Next Best:** Visiting Shop 2 and Shop 5 also results in significantly higher total cars fixed compared to Patrick being absent everywhere, indicating these are also high-impact shops.
+*   **Lowest Productivity:** The 'Patrick Absent Everywhere' scenario results in the lowest total number of cars fixed, serving as a baseline of productivity without his presence.
+*   **Least Impactful Visit:** While still an improvement, 'Patrick visits Shop 3' shows the smallest increase in total cars fixed, suggesting his time there is less impactful on overall network productivity compared to other shops.
+
+This visualization powerfully reinforces the strategic importance of Patrick's scheduling decisions in maximizing the total number of cars fixed.

@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -114,14 +79,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="the-data">The Data 📊</h2>
 <p>The dataset contains 250 observations of daily productivity across 5 shops:</p>
 <div class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>carsDF.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="tbl-data-overview" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: Overview of the productivity data
 </figcaption>
 <div aria-describedby="tbl-data-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="96">
 <div>
 
 
@@ -216,15 +180,13 @@ Table&nbsp;1: Overview of the productivity data
 </div>
 </div>
 <div class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> carsDF.groupby([<span class="st">'shopID'</span>, <span class="st">'boss'</span>])[<span class="st">'carsFixed'</span>].agg([<span class="st">'count'</span>, <span class="st">'mean'</span>, <span class="st">'std'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>]).<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="tbl-data-summary" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: Summary statistics by shop and boss presence
 </figcaption>
 <div aria-describedby="tbl-data-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="97">
 <div>
 
 
@@ -344,31 +306,218 @@ Table&nbsp;2: Summary statistics by shop and boss presence
 </figure>
 </div>
 </div>
-<p>#Productivity by shop and boss presence</p>
-<p>Your report should answer these questions in a clear, concise way:</p>
-<ol type="1">
-<li><p><strong>What does the data show?</strong></p>
+</section>
+<section id="productivity-by-shop-and-boss-presence" class="level2">
+<h2 class="anchored" data-anchor-id="productivity-by-shop-and-boss-presence">Productivity by shop and boss presence</h2>
+<div id="1e16d7ab" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" width="951" height="567" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>**Analysis of Cars Fixed per Day by Boss Presence</p>
+<p>What this plot shows:</p>
 <ul>
-<li>Visualize all 250 data points showing productivity by shop and boss presence</li>
-<li>Which shops benefit most from Patrick’s presence? Which don’t?</li>
-</ul></li>
-<li><p><strong>What should Patrick do?</strong></p>
+<li><strong>General Trend:</strong> You can observe two distinct clusters of data points for each ‘Boss Presence’ category. The cluster for ‘Present’ (green dots) is generally higher on the ‘Number of Cars Fixed’ axis than the cluster for ‘Absent’ (red dots).</li>
+<li><strong>Increased Productivity:</strong> This visually confirms that, on average, more cars tend to be fixed when Patrick is present compared to when he is absent.</li>
+<li><strong>Spread of Data:</strong> The spread of the dots within each category indicates the variability in cars fixed. Even when Patrick is present, there’s a range of productivity, and similarly when he’s absent. However, the overall shift upwards when he’s there is quite apparent.</li>
+</ul>
+<p>This plot effectively illustrates the moderate positive correlation, providing a clear visual representation of how Patrick’s presence impacts the daily number of cars fixed.</p>
+<div id="149a0ab5" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-1.png" width="1143" height="663" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="68c0191c" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-stdout">
+<pre><code>The correlation between 'boss presence' and 'carsFixed' is: 0.2738
+There is a moderate positive correlation, suggesting that boss presence is associated with a noticeable increase in cars fixed.</code></pre>
+</div>
+</div>
+<p><strong>Productivity per shop and boss presence</strong></p>
+<div id="87931920" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-stdout">
+<pre><code>Mean Productivity per Shop:</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">boss</th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">shopID</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>11.05</td>
+<td>18.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>22.13</td>
+<td>32.20</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>32.46</td>
+<td>35.40</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>37.02</td>
+<td>49.80</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>45.51</td>
+<td>53.73</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cd5f8633" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-9-output-1.png" width="722" height="567" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Overall Best Performing Shop:</p>
+<p>Shop 5: Consistently fixes the highest number of cars, both when Patrick is absent (45.51 cars) and when he is present (53.73 cars). While Patrick’s presence still adds to its productivity, Shop 5 has the highest baseline and overall output.</p>
+<p>Overall Worst Performing Shop:</p>
+<p>Shop 1: Consistently fixes the lowest number of cars, both when Patrick is absent (11.05 cars) and when he is present (18.00 cars). It has the lowest baseline productivity among all shops.</p>
+<p>Shops that benefit MOST from Patrick’s Presence (where his presence makes the biggest positive difference):</p>
+<p>Shop 4: This shop shows the largest percentage increase and absolute increase (12.78 additional cars) when Patrick is present. His visits have the most significant impact on boosting its productivity. Shop 2: Also benefits greatly from Patrick’s presence (10.07 additional cars).</p>
+<p>Shop that benefits LEAST from Patrick’s Presence (where his presence makes the smallest positive difference):</p>
+<p>Shop 3: While productivity still increases with Patrick’s presence, the impact is the smallest (2.94 additional cars) compared to other shops. This means his time there yields the least additional output relative to the other locations.</p>
+<p>In summary, Shop 5 is your top performer in absolute terms, while Shop 1 is the lowest. However, if Patrick wants to maximize the impact of his presence, he should prioritize Shop 4 and Shop 2, as his visits there lead to the most substantial increases in cars fixed.</p>
+</section>
+<section id="recommendations-which-shops-should-he-prioritize-why" class="level2">
+<h2 class="anchored" data-anchor-id="recommendations-which-shops-should-he-prioritize-why">Recommendations: Which shops should he prioritize? Why?</h2>
+<p>Based on our detailed analysis, here are the clear, specific recommendations for Patrick’s shop prioritization:</p>
+<p><strong>Which shops should he prioritize?</strong></p>
+<p>Patrick should prioritize visiting <strong>Shop 4</strong>, followed by <strong>Shop 2</strong>, and then <strong>Shop 5</strong>.</p>
+<p><strong>Why?</strong></p>
 <ul>
-<li>Clear, specific recommendations: Which shops should he prioritize? Why?</li>
-<li>What’s the potential financial impact? (Revenue or profit implications)</li>
-</ul></li>
-<li><p><strong>How confident can Patrick be?</strong></p>
+<li><p><strong>Shop 4 (Highest Impact):</strong> Patrick’s presence at Shop 4 yields the most significant increase in productivity, adding an average of <strong>12.78</strong> more cars fixed per day. This is where his time makes the biggest difference to the total number of cars fixed across the network.</p></li>
+<li><p><strong>Shop 2 (Second Highest Impact):</strong> His presence in Shop 2 also leads to a substantial boost, with an average increase of <strong>10.07</strong> additional cars fixed per day.</p></li>
+<li><p><strong>Shop 5 (Strong Performer):</strong> Even though Shop 5 is already the highest performing shop overall (with or without him), his presence still adds a considerable <strong>8.22</strong> additional cars, making it a valuable place to visit.</p></li>
+</ul>
+<p><strong>Conversely, which shops should he reconsider prioritizing?</strong></p>
+<p>Patrick should reconsider frequent visits to <strong>Shop 3</strong> if maximizing network productivity is the primary goal. While his presence there is still positive, it results in the smallest average increase of only <strong>2.94</strong> additional cars fixed per day. This means his time spent at Shop 3 yields the least additional output compared to the other locations. Spending more time at Shops 4, 2, and 5 would offer a much greater return on his valuable time.</p>
+</section>
+<section id="potential-financial-impact-total-weekly-revenue-from-top-shops" class="level2">
+<h2 class="anchored" data-anchor-id="potential-financial-impact-total-weekly-revenue-from-top-shops">Potential Financial Impact: Total Weekly Revenue from Top Shops</h2>
+<p>Let’s calculate the total potential weekly revenue impact for the top shops. Based on our analysis, the shops where Patrick’s presence has the most significant impact are Shop 4, Shop 2, and Shop 5.</p>
+<p>Assuming an average revenue of <strong>$500 per car fixed</strong>, and considering that Patrick can visit one shop per day, if he dedicates one day each to these three top-impact shops within a week, the calculations are as follows:</p>
 <ul>
-<li>Explain uncertainty in plain terms an auto-mechanic can understand</li>
-<li>What ranges of differences can he expect? (We only have 250 days—that’s not a huge sample)</li>
-<li>What could go wrong? What assumptions are you making?</li>
-</ul></li>
-<li><p><strong>What does the future look like?</strong></p>
+<li><strong>Shop 4 Impact:</strong> 12.78 additional cars/day * $500/car = <strong>$6,390 additional revenue for that day</strong></li>
+<li><strong>Shop 2 Impact:</strong> 10.07 additional cars/day * $500/car = <strong>$5,035 additional revenue for that day</strong></li>
+<li><strong>Shop 5 Impact:</strong> 8.22 additional cars/day * $500/car = <strong>$4,110 additional revenue for that day</strong></li>
+</ul>
+<p><strong>Total Weekly Revenue Impact (from visiting these three high-impact shops once each in a week):</strong></p>
+<p>$6,390 (Shop 4) + $5,035 (Shop 2) + $4,110 (Shop 5) = <strong>$15,535</strong></p>
+<p>Therefore, by strategically allocating just three days of his week to these three high-impact shops, Patrick could potentially generate an <strong>additional $15,535 in revenue per week</strong> for the network. This clearly demonstrates the significant financial incentive behind optimized scheduling.</p>
+</section>
+<section id="confidence-assessment-for-revenue-figures" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-assessment-for-revenue-figures">Confidence Assessment for Revenue Figures</h2>
+<p>Let’s talk about how confident we can be in these revenue figures. Remember, these are projections based on historical data, and it’s important to understand the factors that influence their accuracy:</p>
+<p><strong>1. Data Limitations – Not a Crystal Ball:</strong></p>
 <ul>
-<li>Show at least one visualization of projected outcomes under different scheduling scenarios</li>
-<li>Help Patrick see the potential impact of following your recommendations</li>
-</ul></li>
-</ol>
+<li><strong>Limited Historical Data:</strong> Our calculations are based on 250 days of data. While helpful, this isn’t a massive dataset. When we break it down by individual shops and whether you were present or not, the number of observations for each specific scenario becomes even smaller (e.g., only 5 or 10 days of your presence at some shops).</li>
+<li><strong>Averages as Best Guesses:</strong> The ‘additional cars fixed’ numbers (like 12.78 for Shop 4) are averages. They are our best estimates based on the available data, but individual days will naturally vary. On any given day, the actual increase could be a bit higher or lower than the average.</li>
+</ul>
+<p><strong>2. Key Assumptions We’re Making:</strong></p>
+<ul>
+<li><strong>Past Predicts Future:</strong> We’re assuming that the patterns observed in the past 250 days will continue. If there are significant changes in staffing, equipment, local market conditions, or even your management style, the results might differ.</li>
+<li><strong>Direct Causation:</strong> We’re attributing the increase directly to your presence. While the correlation is clear, the data doesn’t tell us <em>why</em> your presence helps. It could be due to your direct supervision, problem-solving, improved morale, or other factors that happen concurrently with your visits.</li>
+<li><strong>Fixed Revenue per Car:</strong> We’ve used an assumed $500 revenue per car. If your actual revenue per car varies, or if the mix of services changes, the financial impact will shift accordingly.</li>
+</ul>
+<p><strong>3. Potential Variability and Uncertainty:</strong></p>
+<ul>
+<li><strong>Day-to-Day Fluctuations:</strong> Just because Shop 4 averages a 12.78-car increase doesn’t mean it will be exactly that every time you visit. Some days it might be 10, other days 15. The revenue figure is an average projection.</li>
+<li><strong>External Factors:</strong> Unforeseen events like major car recalls, economic downturns, or even severe weather could impact overall productivity and revenue, regardless of your schedule.</li>
+</ul>
+<p><strong>In summary:</strong> The revenue figures are strong, data-driven <em>estimates</em> that highlight the <em>potential</em> financial gains from optimized scheduling. They provide a very solid basis for making strategic decisions. However, they should be viewed with a realistic understanding that real-world outcomes can vary due to factors not fully captured in the historical data or our assumptions. Continuous monitoring and adjustment would be wise.</p>
+<div id="4cebba57" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/_r/96x83kq95nn7pv37b8hbx1b40000gn/T/ipykernel_33922/4133578473.py:16: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-2.png" width="951" height="567" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="potential-additional-weekly-revenue-from-top-shops" class="level2">
+<h2 class="anchored" data-anchor-id="potential-additional-weekly-revenue-from-top-shops">Potential Additional Weekly Revenue from Top Shops</h2>
+<p>Let’s visualize the potential weekly revenue impact for the top shops (Shop 4, Shop 2, and Shop 5). This bar plot will show the estimated additional revenue generated by Patrick’s presence at each of these high-impact locations.</p>
+<p>The bar plot showing the ‘Potential Additional Weekly Revenue from Top Shops’ has been successfully generated! You might have seen a FutureWarning from Seaborn, but the plot is correct.</p>
+<p>This chart clearly illustrates the significant financial gains that can be achieved by strategically prioritizing Patrick’s visits:</p>
+<ul>
+<li><strong>Shop 4:</strong> Stands out with the highest potential additional weekly revenue of <strong>$6,390</strong> from a single day’s visit, reinforcing its status as the most impactful shop.</li>
+<li><strong>Shop 2:</strong> Follows with a strong potential of <strong>$5,035</strong> in additional weekly revenue.</li>
+<li><strong>Shop 5:</strong> Also contributes a substantial <strong>$4,110</strong> in additional weekly revenue.</li>
+</ul>
+<p>This visualization powerfully demonstrates the financial incentive for Patrick to allocate his time to these specific high-impact shops, as it directly translates into thousands of dollars in additional revenue per week for the business.</p>
+<div id="dbc5c765" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/_r/96x83kq95nn7pv37b8hbx1b40000gn/T/ipykernel_33922/3061641293.py:32: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-11-output-2.png" width="1141" height="663" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="projected-outcomes-under-different-scheduling-scenarios" class="level2">
+<h2 class="anchored" data-anchor-id="projected-outcomes-under-different-scheduling-scenarios">Projected Outcomes Under Different Scheduling Scenarios</h2>
+<p>This chart clearly shows the ‘Total Cars Fixed’ for each potential scheduling scenario, making it easy to compare the impact of various choices.</p>
+<p>The bar plot visualizing ‘Projected Total Cars Fixed per Day Under Different Scheduling Scenarios’ has been successfully generated! You might have noticed a FutureWarning from Seaborn, but the plot is correct and clearly illustrates the outcomes.</p>
+<p>This chart effectively summarizes the potential impact of different scheduling choices for Patrick:</p>
+<ul>
+<li><strong>Highest Productivity:</strong> The scenario ‘Patrick visits Shop 4’ consistently yields the highest total number of cars fixed across the network, demonstrating the maximum potential productivity.</li>
+<li><strong>Next Best:</strong> Visiting Shop 2 and Shop 5 also results in significantly higher total cars fixed compared to Patrick being absent everywhere, indicating these are also high-impact shops.</li>
+<li><strong>Lowest Productivity:</strong> The ‘Patrick Absent Everywhere’ scenario results in the lowest total number of cars fixed, serving as a baseline of productivity without his presence.</li>
+<li><strong>Least Impactful Visit:</strong> While still an improvement, ‘Patrick visits Shop 3’ shows the smallest increase in total cars fixed, suggesting his time there is less impactful on overall network productivity compared to other shops.</li>
+</ul>
+<p>This visualization powerfully reinforces the strategic importance of Patrick’s scheduling decisions in maximizing the total number of cars fixed.</p>
 </section>
 </section>
 
